@@ -1,3 +1,13 @@
+scopeconfig:
+  - scope: go
+  - scope: node
+  - scope: images
+  - scope: php
+  - scope: python
+  
+# Set to true to disable all checks
+threshold: high
+
 fileignoreconfig:
 - filename: env.example.txt
   checksum: 0f96029ab6623c1d57d6fee23c7d19b56f68776f50e6cb58b91d85557edbec68
