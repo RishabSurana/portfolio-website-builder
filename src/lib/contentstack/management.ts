@@ -18,7 +18,7 @@ interface CreateEntryOptions {
 }
 
 interface UploadAssetOptions {
-  file: Buffer | Blob;
+  file: ArrayBuffer | Uint8Array | Blob;
   fileName: string;
   contentType: string;
   folder?: string;
@@ -63,7 +63,20 @@ export async function uploadAsset({ file, fileName, contentType, folder, descrip
   const url = `${API_ENDPOINT}/v3/assets`;
   
   const formData = new FormData();
-  formData.append('asset[upload]', new Blob([file], { type: contentType }), fileName);
+  
+  // Handle different file types - convert to Blob if needed
+  let blob: Blob;
+  if (file instanceof Blob) {
+    blob = file;
+  } else if (file instanceof ArrayBuffer) {
+    blob = new Blob([file], { type: contentType });
+  } else {
+    // Uint8Array - slice to get a proper ArrayBuffer
+    const arrayBuffer = file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength) as ArrayBuffer;
+    blob = new Blob([arrayBuffer], { type: contentType });
+  }
+  
+  formData.append('asset[upload]', blob, fileName);
   
   if (folder) {
     formData.append('asset[parent_uid]', folder);
@@ -143,12 +156,12 @@ export async function createAndPublishEntry(options: CreateEntryOptions) {
 export async function uploadAssetFromUrl(imageUrl: string, fileName: string) {
   // Fetch the image
   const response = await fetch(imageUrl);
-  const buffer = await response.arrayBuffer();
+  const arrayBuffer = await response.arrayBuffer();
   const contentType = response.headers.get('content-type') || 'image/png';
 
-  // Upload to Contentstack
+  // Upload to Contentstack - use Uint8Array for cross-platform compatibility
   return uploadAsset({
-    file: Buffer.from(buffer),
+    file: new Uint8Array(arrayBuffer),
     fileName,
     contentType,
     description: `Uploaded from ${imageUrl}`,
