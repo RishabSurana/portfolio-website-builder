@@ -11,8 +11,6 @@ fileignoreconfig:
   checksum: c4348331c74cb88aa0464c75a24bf76924fc443b9878e30139535cb25276d970
 - filename: src/lib/contentstack/config.ts
   checksum: 9de5222729d76b89395b5ae4a2ee74f4543ea6fc95975f59e7f2d2d39ad2dc81
-- filename: src/lib/portfolio-generator.ts
-  checksum: e17ef4a342186a24fe30d2338ee4cf35f150411387d7a97c2f0237b232418733
 - filename: src/lib/contentstack/launch.ts
   checksum: 4bc301b24fc6f1500097901357467662b118b236becd41108ecd88d699017cdb
 - filename: README.md
@@ -25,4 +23,12 @@ fileignoreconfig:
   checksum: ded2648d2b99cd3514867f44031eddad7194e5e83d41da4831b5712bd92e07d8
 - filename: src/components/PortfolioForm.tsx
   checksum: 64cea17006e80e7d21cb3de828f9953108d5293b54049e23d2c234f18505844f
+- filename: src/components/portfolio/ProjectsSection.tsx
+  checksum: dfaacf0854b7bdb3b908a228bb49830313f48b21333e554230d0d8c0d499115d
+- filename: src/lib/contentstack/delivery.ts
+  checksum: 4d5616d48d9993d8c18534d45ac18654309dab9468f63e584a0154d1c06436e4
+- filename: src/lib/portfolio-generator.ts
+  checksum: a90ac420a16fd24492ca38fd6b38570986e43285d11fe43242eb99bdd3496b84
+- filename: src/app/[username]/page.tsx
+  checksum: cce201fea9d3ca06edbb2d9295ff20547413b011d5060ef5341660281fa22ade
 version: "1.0"

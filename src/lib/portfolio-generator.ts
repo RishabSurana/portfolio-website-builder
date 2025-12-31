@@ -104,37 +104,36 @@ async function createPortfolioEntry(
   content: GeneratedPortfolioContent,
   avatarAssetUid: string
 ) {
-  // Create the main portfolio entry
+  // Create the main portfolio entry - structure must match content type schema
   const portfolioEntry = {
     title: `${userInput.fullName}'s Portfolio`,
     slug: githubData.profile.login.toLowerCase(),
+    url: `/${githubData.profile.login.toLowerCase()}`,
     
-    // Hero Section
-    hero_headline: content.hero.headline,
-    hero_subheadline: content.hero.subheadline,
-    hero_cta_text: content.hero.ctaText,
+    // Hero Section (group field)
+    hero_section: {
+      headline: content.hero.headline,
+      subheadline: content.hero.subheadline,
+      cta_text: content.hero.ctaText,
+    },
     
-    // About Section
-    about_title: content.about.title,
-    about_content: content.about.paragraphs.join('\n\n'),
-    about_highlights: content.about.highlights,
-    
-    // Avatar
-    // avatar: {
-    //   uid: avatarAssetUid,
-    // },
+    // Avatar (file field)
     avatar: avatarAssetUid,
     
-    // Skills
-    skills_title: content.skills.title,
-    skills_categories: content.skills.categories.map(cat => ({
+    // About Section (group field)
+    about_section: {
+      title: content.about.title,
+      content: content.about.paragraphs.join('\n\n'),
+      highlights: content.about.highlights,
+    },
+    
+    // Skills (multiple group field)
+    skills: content.skills.categories.map(cat => ({
       category_name: cat.name,
       skills_list: cat.skills,
     })),
     
-    // Projects
-    projects_title: content.projects.title,
-    projects_description: content.projects.description,
+    // Featured Projects (multiple group field)
     featured_projects: content.projects.featured.map(project => ({
       name: project.name,
       description: project.description,
@@ -144,28 +143,40 @@ async function createPortfolioEntry(
       live_url: project.liveUrl || '',
     })),
     
-    // Contact
-    contact_title: content.contact.title,
-    contact_description: content.contact.description,
-    email: content.contact.email || userInput.email,
+    // Contact Section (group field)
+    contact_section: {
+      title: content.contact.title,
+      description: content.contact.description,
+      email: content.contact.email || userInput.email,
+    },
+    
+    // Social Links (multiple group field)
     social_links: content.contact.socialLinks.map(link => ({
       platform: link.platform,
       url: link.url,
     })),
     
-    // SEO
-    seo_title: content.meta.pageTitle,
-    seo_description: content.meta.metaDescription,
-    seo_keywords: content.meta.keywords.join(', '),
+    // SEO (group field)
+    seo: {
+      page_title: content.meta.pageTitle,
+      meta_description: content.meta.metaDescription,
+      keywords: content.meta.keywords.join(', '),
+    },
     
-    // User preferences
-    portfolio_style: userInput.portfolioStyle || 'modern',
-    color_scheme: userInput.colorScheme || 'dark',
+    // Style Settings (group field)
+    style_settings: {
+      portfolio_style: userInput.portfolioStyle || 'modern',
+      color_scheme: userInput.colorScheme || 'dark',
+    },
     
-    // GitHub metadata
-    github_username: githubData.profile.login,
-    github_url: `https://github.com/${githubData.profile.login}`,
-    top_languages: githubData.topLanguages,
+    // GitHub Metadata (group field)
+    github_metadata: {
+      github_username: githubData.profile.login,
+      github_url: `https://github.com/${githubData.profile.login}`,
+      top_languages: githubData.topLanguages,
+      public_repos_count: githubData.profile.publicRepos,
+      followers_count: githubData.profile.followers,
+    },
     
     // Timestamps
     generated_at: new Date().toISOString(),
