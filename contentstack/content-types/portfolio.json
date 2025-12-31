@@ -1,0 +1,342 @@
+{
+      "title": "Portfolio",
+      "uid": "portfolio",
+      "schema": [
+        {
+          "display_name": "Title",
+          "uid": "title",
+          "data_type": "text",
+          "mandatory": true,
+          "unique": true,
+          "field_metadata": {
+            "instruction": "Portfolio title (e.g., 'John Doe's Portfolio')"
+          }
+        },
+        {
+          "display_name": "Slug",
+          "uid": "slug",
+          "data_type": "text",
+          "mandatory": true,
+          "unique": true,
+          "field_metadata": {
+            "instruction": "URL-friendly identifier (usually GitHub username)"
+          }
+        },
+        {
+          "display_name": "URL",
+          "uid": "url",
+          "data_type": "text",
+          "mandatory": true,
+          "field_metadata": {
+            "instruction": "URL path for this portfolio page"
+          }
+        },
+        {
+          "display_name": "Hero Section",
+          "uid": "hero_section",
+          "data_type": "group",
+          "field_metadata": {
+            "instruction": "Main hero section content"
+          },
+          "schema": [
+            {
+              "display_name": "Headline",
+              "uid": "headline",
+              "data_type": "text",
+              "mandatory": true
+            },
+            {
+              "display_name": "Subheadline",
+              "uid": "subheadline",
+              "data_type": "text",
+              "mandatory": true,
+              "field_metadata": {
+                "multiline": true
+              }
+            },
+            {
+              "display_name": "CTA Text",
+              "uid": "cta_text",
+              "data_type": "text",
+              "mandatory": false
+            }
+          ]
+        },
+        {
+          "display_name": "Avatar",
+          "uid": "avatar",
+          "data_type": "file",
+          "mandatory": false,
+          "field_metadata": {
+            "instruction": "Profile image (usually from GitHub)"
+          }
+        },
+        {
+          "display_name": "About Section",
+          "uid": "about_section",
+          "data_type": "group",
+          "schema": [
+            {
+              "display_name": "Title",
+              "uid": "title",
+              "data_type": "text"
+            },
+            {
+              "display_name": "Content",
+              "uid": "content",
+              "data_type": "text",
+              "field_metadata": {
+                "multiline": true
+              }
+            },
+            {
+              "display_name": "Highlights",
+              "uid": "highlights",
+              "data_type": "text",
+              "multiple": true,
+              "field_metadata": {
+                "instruction": "Key achievements or traits"
+              }
+            }
+          ]
+        },
+        {
+          "display_name": "Skills",
+          "uid": "skills",
+          "data_type": "group",
+          "multiple": true,
+          "schema": [
+            {
+              "display_name": "Category Name",
+              "uid": "category_name",
+              "data_type": "text",
+              "mandatory": true
+            },
+            {
+              "display_name": "Skills List",
+              "uid": "skills_list",
+              "data_type": "text",
+              "multiple": true
+            }
+          ]
+        },
+        {
+          "display_name": "Featured Projects",
+          "uid": "featured_projects",
+          "data_type": "group",
+          "multiple": true,
+          "max_instance": 10,
+          "schema": [
+            {
+              "display_name": "Project Name",
+              "uid": "name",
+              "data_type": "text",
+              "mandatory": true
+            },
+            {
+              "display_name": "Description",
+              "uid": "description",
+              "data_type": "text",
+              "field_metadata": {
+                "multiline": true
+              }
+            },
+            {
+              "display_name": "Tech Stack",
+              "uid": "tech_stack",
+              "data_type": "text",
+              "multiple": true
+            },
+            {
+              "display_name": "Highlights",
+              "uid": "highlights",
+              "data_type": "text",
+              "multiple": true
+            },
+            {
+              "display_name": "GitHub URL",
+              "uid": "github_url",
+              "data_type": "text"
+            },
+            {
+              "display_name": "Live URL",
+              "uid": "live_url",
+              "data_type": "text"
+            },
+            {
+              "display_name": "Stars",
+              "uid": "stars",
+              "data_type": "number"
+            }
+          ]
+        },
+        {
+          "display_name": "Contact Section",
+          "uid": "contact_section",
+          "data_type": "group",
+          "schema": [
+            {
+              "display_name": "Title",
+              "uid": "title",
+              "data_type": "text"
+            },
+            {
+              "display_name": "Description",
+              "uid": "description",
+              "data_type": "text",
+              "field_metadata": {
+                "multiline": true
+              }
+            },
+            {
+              "display_name": "Email",
+              "uid": "email",
+              "data_type": "text"
+            }
+          ]
+        },
+        {
+          "display_name": "Social Links",
+          "uid": "social_links",
+          "data_type": "group",
+          "multiple": true,
+          "schema": [
+            {
+              "display_name": "Platform",
+              "uid": "platform",
+              "data_type": "text",
+              "mandatory": true,
+              "display_type": "dropdown",
+              "enum": {
+                "advanced": false,
+                "choices": [
+                  { "value": "GitHub" },
+                  { "value": "LinkedIn" },
+                  { "value": "Twitter" },
+                  { "value": "Website" },
+                  { "value": "Email" },
+                  { "value": "Other" }
+                ]
+              }
+            },
+            {
+              "display_name": "URL",
+              "uid": "url",
+              "data_type": "text",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "display_name": "SEO",
+          "uid": "seo",
+          "data_type": "group",
+          "schema": [
+            {
+              "display_name": "Page Title",
+              "uid": "page_title",
+              "data_type": "text"
+            },
+            {
+              "display_name": "Meta Description",
+              "uid": "meta_description",
+              "data_type": "text",
+              "field_metadata": {
+                "multiline": true
+              }
+            },
+            {
+              "display_name": "Keywords",
+              "uid": "keywords",
+              "data_type": "text"
+            }
+          ]
+        },
+        {
+          "display_name": "Style Settings",
+          "uid": "style_settings",
+          "data_type": "group",
+          
+          "schema": [
+            {
+              "display_name": "Portfolio Style",
+              "uid": "portfolio_style",
+              "data_type": "text",
+              "display_type": "dropdown",
+              "enum": {
+                "advanced": false,
+                "choices": [
+                  { "value": "minimal" },
+                  { "value": "modern" },
+                  { "value": "creative" },
+                  { "value": "professional" }
+                ]
+              }
+            },
+            {
+              "display_name": "Color Scheme",
+              "uid": "color_scheme",
+              "data_type": "text",
+              "display_type": "dropdown",
+              "enum": {
+                "advanced": false,
+                "choices": [
+                  { "value": "light" },
+                  { "value": "dark" },
+                  { "value": "colorful" }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "display_name": "GitHub Metadata",
+          "uid": "github_metadata",
+          "data_type": "group",
+          "schema": [
+            {
+              "display_name": "GitHub Username",
+              "uid": "github_username",
+              "data_type": "text"
+            },
+            {
+              "display_name": "GitHub URL",
+              "uid": "github_url",
+              "data_type": "text"
+            },
+            {
+              "display_name": "Top Languages",
+              "uid": "top_languages",
+              "data_type": "text",
+              "multiple": true
+            },
+            {
+              "display_name": "Public Repos Count",
+              "uid": "public_repos_count",
+              "data_type": "number"
+            },
+            {
+              "display_name": "Followers Count",
+              "uid": "followers_count",
+              "data_type": "number"
+            }
+          ]
+        },
+        {
+          "display_name": "Generated At",
+          "uid": "generated_at",
+          "data_type": "isodate",
+          "field_metadata": {
+            "instruction": "Timestamp when this portfolio was generated"
+          }
+        }
+      ],
+      "options": {
+        "is_page": true,
+        "singleton": false,
+        "title": "title",
+        "url_pattern": "/:slug"
+    }
+  }
+  
+  
