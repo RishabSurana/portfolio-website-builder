@@ -1,0 +1,28 @@
+fileignoreconfig:
+- filename: env.example.txt
+  checksum: 0f96029ab6623c1d57d6fee23c7d19b56f68776f50e6cb58b91d85557edbec68
+- filename: next-env.d.ts
+  checksum: 9c93582ef945ad9926cf6ad639b05f28a47525684bf330ccb19e46353ffef62e
+- filename: package-lock.json
+  checksum: 8fde30034ba95d3445d508f8f78e2548dc0816159ec513ffde1dfc7e9063483b
+- filename: src/app/layout.tsx
+  checksum: 80d1185e82b9a22a7a5d1a78455fe82f7322543983a2769778ebd291ee03f5f9
+- filename: src/lib/contentstack/management.ts
+  checksum: c4348331c74cb88aa0464c75a24bf76924fc443b9878e30139535cb25276d970
+- filename: src/lib/contentstack/config.ts
+  checksum: 9de5222729d76b89395b5ae4a2ee74f4543ea6fc95975f59e7f2d2d39ad2dc81
+- filename: src/lib/portfolio-generator.ts
+  checksum: e17ef4a342186a24fe30d2338ee4cf35f150411387d7a97c2f0237b232418733
+- filename: src/lib/contentstack/launch.ts
+  checksum: 4bc301b24fc6f1500097901357467662b118b236becd41108ecd88d699017cdb
+- filename: README.md
+  checksum: 762cf69703b432e088ea4b0c645d825504b483d2f1194f07f9eefdd15727c18b
+- filename: src/lib/ai/content-generator.ts
+  checksum: 0853511c33123680eb6ac0c4bf1bb02e1dc6dfdf7f0eead58757ba11d56b14c7
+- filename: src/lib/ai/content-generator-groq.ts
+  checksum: 5781d5e309f3d276ab47913db624d46048a19282268d69c118d43b5c041e4b91
+- filename: src/components/PreviewPane.tsx
+  checksum: ded2648d2b99cd3514867f44031eddad7194e5e83d41da4831b5712bd92e07d8
+- filename: src/components/PortfolioForm.tsx
+  checksum: 64cea17006e80e7d21cb3de828f9953108d5293b54049e23d2c234f18505844f
+version: "1.0"
