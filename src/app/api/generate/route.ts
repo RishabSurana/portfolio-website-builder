@@ -8,7 +8,7 @@
  * 2. Fetches GitHub data
  * 3. Generates AI content
  * 4. Creates Contentstack entry
- * 5. Triggers deployment
+ * 5. Returns portfolio URL for redirect
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -85,9 +85,8 @@ export async function POST(request: NextRequest) {
       mode: 'deploy',
       data: {
         portfolioUrl: result.portfolioUrl,
-        previewUrl: result.previewUrl,
+        username: result.username,
         entryUid: result.entryUid,
-        deploymentId: result.deploymentId,
       },
     });
   } catch (error) {

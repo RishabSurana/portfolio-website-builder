@@ -5,13 +5,12 @@
  * 1. Fetches GitHub data
  * 2. Generates AI content
  * 3. Creates Contentstack entries
- * 4. Triggers deployment on Contentstack Launch
+ * 4. Redirects to portfolio page
  */
 
 import { fetchAllGitHubData, GitHubData } from './github/fetcher';
 import { generatePortfolioContent, UserInput, GeneratedPortfolioContent } from './ai';
 import { createAndPublishEntry, uploadAssetFromUrl } from './contentstack/management';
-import { triggerLaunchDeployment, getDeploymentStatus } from './contentstack/launch';
 
 export interface PortfolioGenerationRequest {
   userInput: UserInput;
@@ -21,14 +20,13 @@ export interface PortfolioGenerationRequest {
 export interface PortfolioGenerationResult {
   success: boolean;
   portfolioUrl?: string;
-  previewUrl?: string;
+  username?: string;
   entryUid?: string;
-  deploymentId?: string;
   error?: string;
 }
 
 /**
- * Main function to generate and deploy a portfolio
+ * Main function to generate a portfolio and create Contentstack entry
  */
 export async function generateAndDeployPortfolio(
   request: PortfolioGenerationRequest
@@ -67,24 +65,15 @@ export async function generateAndDeployPortfolio(
     );
     console.log(`✅ Entry created: ${entry.entry.uid}`);
 
-    // Step 5: Trigger deployment
-    console.log('🚀 Triggering deployment...');
-    const deployment = await triggerLaunchDeployment({
-      entryUid: entry.entry.uid,
-      username: githubData.profile.login,
-    });
-    console.log(`✅ Deployment started: ${deployment.deploymentId}`);
-
-    // Step 6: Wait for deployment (optional - can be async)
-    console.log('⏳ Waiting for deployment...');
-    const finalStatus = await waitForDeployment(deployment.deploymentId);
+    // Return success with portfolio URL
+    const username = githubData.profile.login.toLowerCase();
+    console.log(`🎉 Portfolio ready at /${username}`);
 
     return {
       success: true,
-      portfolioUrl: finalStatus.url,
-      previewUrl: finalStatus.previewUrl,
+      portfolioUrl: `/${username}`,
+      username: username,
       entryUid: entry.entry.uid,
-      deploymentId: deployment.deploymentId,
     };
   } catch (error) {
     console.error('❌ Portfolio generation failed:', error);
@@ -186,35 +175,6 @@ async function createPortfolioEntry(
     contentType: 'portfolio',
     entry: portfolioEntry,
   });
-}
-
-/**
- * Wait for deployment to complete
- */
-async function waitForDeployment(
-  deploymentId: string,
-  maxAttempts = 30,
-  intervalMs = 10000
-): Promise<{ url: string; previewUrl?: string }> {
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const status = await getDeploymentStatus(deploymentId);
-
-    if (status.status === 'success') {
-      return {
-        url: status.url!,
-        previewUrl: status.previewUrl,
-      };
-    }
-
-    if (status.status === 'failed') {
-      throw new Error(`Deployment failed: ${status.error}`);
-    }
-
-    // Wait before checking again
-    await new Promise(resolve => setTimeout(resolve, intervalMs));
-  }
-
-  throw new Error('Deployment timeout - please check Contentstack Launch dashboard');
 }
 
 /**

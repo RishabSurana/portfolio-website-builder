@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { PortfolioForm } from '@/components/PortfolioForm';
 import { PreviewPane } from '@/components/PreviewPane';
-import { DeploymentStatus } from '@/components/DeploymentStatus';
 
-type AppState = 'form' | 'generating' | 'preview' | 'deploying' | 'deployed';
+type AppState = 'form' | 'generating' | 'preview' | 'deploying';
 
 interface GeneratedData {
   githubProfile?: any;
@@ -13,11 +13,11 @@ interface GeneratedData {
   topLanguages?: string[];
   generatedContent?: any;
   portfolioUrl?: string;
-  previewUrl?: string;
-  deploymentId?: string;
+  username?: string;
 }
 
 export default function Home() {
+  const router = useRouter();
   const [appState, setAppState] = useState<AppState>('form');
   const [generatedData, setGeneratedData] = useState<GeneratedData | null>(null);
   const [formData, setFormData] = useState<any>(null); // Store form data for deployment
@@ -64,18 +64,14 @@ export default function Home() {
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Failed to deploy portfolio');
+        throw new Error(result.error || 'Failed to create portfolio');
       }
 
-      setGeneratedData({
-        ...generatedData,
-        portfolioUrl: result.data.portfolioUrl,
-        previewUrl: result.data.previewUrl,
-        deploymentId: result.data.deploymentId,
-      });
-      setAppState('deployed');
+      // Redirect to the portfolio page
+      const portfolioUrl = result.data.portfolioUrl || `/${result.data.username}`;
+      router.push(portfolioUrl);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Deployment failed');
+      setError(err instanceof Error ? err.message : 'Portfolio creation failed');
       setAppState('preview');
     }
   };
@@ -193,19 +189,9 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Deploying to Contentstack Launch</h3>
-              <p className="text-slate-400">Creating entries and triggering deployment...</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Creating Your Portfolio</h3>
+              <p className="text-slate-400">Saving to Contentstack and redirecting to your portfolio...</p>
             </div>
-          )}
-
-          {/* Deployed State */}
-          {appState === 'deployed' && generatedData && (
-            <DeploymentStatus
-              portfolioUrl={generatedData.portfolioUrl}
-              previewUrl={generatedData.previewUrl}
-              deploymentId={generatedData.deploymentId}
-              onCreateAnother={handleReset}
-            />
           )}
         </div>
       </div>
